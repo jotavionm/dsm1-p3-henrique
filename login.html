@@ -13,43 +13,49 @@
 </head>
 
 <body>
+    <header>
+        <span>Extramile - Escola de Programação
+    </header>
     <main>
-
         <div class="principal">
 
             <div class="coluna-video">
-                <video class="exemplo-video" src="Remover_Texto_Mostrar_Pessoa.mp4"></video>
+                <video class="exemplo-video" src="Remover_Texto_Mostrar_Pessoa.mp4" autoplay muted loop></video>
             </div>
 
             <div class="coluna-form">
-
+                <h1>Venha para a maior escola <br> de programação de <span>Jacareí</span></h1>
                 <h2>Faça seu cadastro:</h2>
-                <form action="">
+                <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span></span>
+                <form action="login.js" name="cadastro">
 
                     <fieldset>
                         <legend class="">Precisamos de seus dados pessoais:</legend>
-                        <div class="campo-formulario">
+                        <div class="input-group">
                             <label for="nome">Nome completo:</label>
-                            <input type="text">
+                            <input pattern="[A-Za-z\s]+" id="nome" type="text" autofocus required
+                                placeholder="Ex: João de Souza da Silva">
                         </div>
-                        <div class="campo-formulario">
+                        <div class="input-group">
                             <label for="email">Email:</label>
-                            <input type="email" name="email" id="email">
+                            <input type="email" name="email" id="email" required placeholder="meuemail@exemplo.com.br">
                         </div>
                     </fieldset>
 
                     <fieldset>
                         <legend>Agora insira sua senha</legend>
-                        <div class="campo-formulario">
+                        <div class="input-group">
                             <label for="senha">Senha:</label>
-                            <input type="password" id="senha">
+                            <input type="password" id="senha" required
+                                placeholder="Mínimo 1 letra maiúscula, 1 minúscula, 1 número e 1 símbolo">
                         </div>
-                        <div class="campo-formulario">
+                        <div class="input-group">
                             <label for="confirmacao-senha">Confirme sua senha:</label>
-                            <input type="password" id="confirmacao-senha">
+                            <input type="password" id="confirmacao-senha" required
+                                placeholder="Mínimo 1 letra maiúscula, 1 minúscula, 1 número e 1 símbolo">
                         </div>
                     </fieldset>
-                    <button class="botao-login">Cadastrar</button>
+                    <button aria-label="Cadastrar novo usuário">Cadastrar</button>
                 </form>
 
             </div>
