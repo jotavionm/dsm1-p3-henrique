@@ -8,13 +8,16 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Electrolize&display=swap" rel="stylesheet">
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link rel="stylesheet" href="login.css">
+
 
 </head>
 
 <body>
     <header>
-        <span>Extramile - Escola de Programação
+        <span>Extramile - Escola de Programação</span>
     </header>
     <main>
         <div class="principal">
@@ -31,31 +34,59 @@
 
                     <fieldset>
                         <legend class="">Precisamos de seus dados pessoais:</legend>
-                        <div class="input-group">
-                            <label for="nome">Nome completo:</label>
-                            <input pattern="[A-Za-z\s]+" id="nome" type="text" autofocus required
-                                placeholder="Ex: João de Souza da Silva">
-                        </div>
-                        <div class="input-group">
-                            <label for="email">Email:</label>
-                            <input type="email" name="email" id="email" required placeholder="meuemail@exemplo.com.br">
+                        <div class="row">
+                            <div class="input-group col-12 col-md-6 mb-3">
+                                <label class="form-label w-100" for="nome">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                        class="bi bi-person-bounding-box" viewBox="0 0 16 16">
+                                        <path
+                                            d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5M.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5" />
+                                        <path
+                                            d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                    </svg> Nome completo:</label>
+                                <input pattern="[A-Za-z\s]+" id="nome" type="text" autofocus required
+                                    placeholder="Ex: João de Souza da Silva">
+                                    <small id="nome-feedback" class="form-text"></small>
+                            </div>
+                            <div class="input-group col-12 col-md-6 mb-3">
+                                <label for="email"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-envelope" viewBox="0 0 16 16">
+                                        <path
+                                            d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z" />
+                                    </svg> Email:</label>
+                                <input type="email" name="email" id="email" required
+                                    placeholder="meuemail@exemplo.com.br">
+                                <small id="email-feedback" class="form-text"></small>
+                            </div>
                         </div>
                     </fieldset>
 
                     <fieldset>
                         <legend>Agora insira sua senha</legend>
                         <div class="input-group">
-                            <label for="senha">Senha:</label>
+                            <label for="senha"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
+                                    <path
+                                        d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8m4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5" />
+                                    <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+                                </svg> Senha:</label>
                             <input type="password" id="senha" required
                                 placeholder="Mínimo 1 letra maiúscula, 1 minúscula, 1 número e 1 símbolo">
+                                <small id="senha-feedback" class="form-text"></small>
                         </div>
                         <div class="input-group">
-                            <label for="confirmacao-senha">Confirme sua senha:</label>
+                            <label for="confirmacao-senha"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                    height="16" fill="currentColor" class="bi bi-key" viewBox="0 0 16 16">
+                                    <path
+                                        d="M0 8a4 4 0 0 1 7.465-2H14a.5.5 0 0 1 .354.146l1.5 1.5a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0L13 9.207l-.646.647a.5.5 0 0 1-.708 0L11 9.207l-.646.647a.5.5 0 0 1-.708 0L9 9.207l-.646.647A.5.5 0 0 1 8 10h-.535A4 4 0 0 1 0 8m4-3a3 3 0 1 0 2.712 4.285A.5.5 0 0 1 7.163 9h.63l.853-.854a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.646-.647a.5.5 0 0 1 .708 0l.646.647.793-.793-1-1h-6.63a.5.5 0 0 1-.451-.285A3 3 0 0 0 4 5" />
+                                    <path d="M4 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+                                </svg> Confirme sua senha:</label>
                             <input type="password" id="confirmacao-senha" required
                                 placeholder="Mínimo 1 letra maiúscula, 1 minúscula, 1 número e 1 símbolo">
+                                <small id="senha-confirm-feedback" class="form-text"></small>
                         </div>
                     </fieldset>
-                    <button aria-label="Cadastrar novo usuário">Cadastrar</button>
+                    <button class="" aria-label="Cadastrar novo usuário">Cadastrar</button>
                 </form>
 
             </div>
