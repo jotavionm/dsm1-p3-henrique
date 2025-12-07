@@ -1,90 +1,120 @@
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', function() {
+
+    //capturando as informações do input e colocando em variável
     const form = document.querySelector('form[name="cadastro"]');
+    const nomeInput = document.getElementById('nome');
+    const emailInput = document.getElementById('email');
+    const senhaInput = document.getElementById('senha');
+    const confirmacaoSenhaInput = document.getElementById('confirmacao-senha');
 
-    function validateField(id, regex, minLength, errorMessage, successMessage) {
-        const input = document.getElementById(id);
-        const value = input.value.trim();
-        let isValid = true;
-        let message = '';
+    //capturando os <small> que eu criei pra botar as msg na tela
+    const nomeFeedback = document.getElementById('nome-feedback');
+    const emailFeedback = document.getElementById('email-feedback');
+    const senhaFeedback = document.getElementById('senha-feedback');
+    const senhaConfirmFeedback = document.getElementById('senha-confirm-feedback');
 
-        if (value.length === 0) {
-             isValid = false;
-             message = 'Campo obrigatório.';
-        } else if (minLength && value.length < minLength) {
-            isValid = false;
-            message = `Deve ter no mínimo ${minLength} caracteres.`;
-        } else if (regex && !new RegExp(regex).test(value)) {
-            isValid = false;
-            message = errorMessage;
+    //o teste do regex
+    const senhaRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    function exibirFeedback(inputElement, feedbackElement, isValid, message) { //não entendi onde eu tava errando, então pedi pro chagpt conectar tudo e ele criou essa função que eu não entendi. Parece que ele faz a leitura do isValid pra limpar as mensagens? Ainda estou em dúvida
+        if (isValid) {
+            inputElement.classList.remove('is-invalid');
+            inputElement.classList.add('is-valid');
+            feedbackElement.textContent = '';
         } else {
-            message = successMessage;
+            inputElement.classList.remove('is-valid');
+            inputElement.classList.add('is-invalid');
+            feedbackElement.textContent = message;
+            feedbackElement.style.color = '#92140C';
+        }
+    }
+
+    // testa com o regex se a senha tá certa e adiciona no isValid pra enviar a mensagem
+    function validarForcaSenha() {
+        const senha = senhaInput.value;
+        const isValid = senhaRegex.test(senha);
+
+        let mensagem = '';
+        if (!isValid) {
+            mensagem = 'A senha deve ter no mínimo 8 caracteres, 1 maiúscula, 1 minúscula, 1 número e 1 símbolo (@$!%*?&).';
         }
 
-        selecionarFeedback(id, message, !isValid);
+        exibirFeedback(senhaInput, senhaFeedback, isValid, mensagem);
+
         return isValid;
     }
-    
-    function validateName() {
-         const nameRegex = /^[A-Za-z\s]+$/;
-         return validateField('nome', nameRegex, 5, 'Nome inválido. Use apenas letras (min 5 caracteres).', 'Nome OK!');
-    }
-    
-    function validateEmail() {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return validateField('email', emailRegex, null, 'O formato do e-mail não é válido.', 'E-mail OK!');
-    }
-    
-    function validatePasswordFields() {
-        const senhaInput = document.getElementById('senha');
-        const confirmacaoInput = document.getElementById('confirmacao-senha');
-        const senhaConteudo = senhaInput.value;
-        const confirmacaoValue = confirmacaoInput.value;
-        const passwordMinLength = 8;
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/;
-        
-        let senhaValida = true;
-        let validConfirmacao = true;
 
-        if (senhaConteudo.length === 0) {
-            selecionarFeedback('senha', 'A senha é obrigatória.', true);
-            senhaValida = false;
-        } else if (!passwordRegex.test(senhaConteudo)) {
-            selecionarFeedback('senha', 'A senha deve seguir o padrão de segurança (min. 8, maiúscula, minúscula, número e símbolo).', true);
-            senhaValida = false;
-        } else {
-            selecionarFeedback('senha', 'Senha forte e válida.', false);
+    function validarConfirmacaoSenha() { // esse foi chatgpt, não descobri como fazer sozinho mas entendi a lógica
+        const senha = senhaInput.value;
+        const confirmacao = confirmacaoSenhaInput.value;
+        const isValid = senha === confirmacao && confirmacao !== '';
+
+        let mensagem = '';
+        if (confirmacao === '') { // vê se está vazio
+             mensagem = 'Por favor, confirme sua senha.';
+        } else if (senha !== confirmacao) { // vê se as duas strings estão iguais
+            mensagem = 'As senhas não conferem.';
+        } else if (!validarForcaSenha()){ //confirma se a senha original passou no teste
+            mensagem = 'A senha original não atende aos requisitos de segurança.';
         }
 
-        if (confirmacaoValue.length === 0) {
-            selecionarFeedback('confirmacao-senha', 'A confirmação de senha é obrigatória.', true);
-            validConfirmacao = false;
-        } else if (senhaConteudo !== confirmacaoValue) {
-            selecionarFeedback('confirmacao-senha', 'As senhas não conferem.', true);
-            validConfirmacao = false;
-            // Se a confirmação falhar, a senha original é marcada com erro para indicar o problema.
-            if (senhaValida) {
-                selecionarFeedback('senha', 'As senhas não conferem.', true);
-            }
-        } else if (senhaValida) { // Só mostra sucesso se a senha original também estiver válida
-            selecionarFeedback('confirmacao-senha', 'Senhas conferem!', false);
-        }
-        
-        return senhaValida && validConfirmacao;
+        exibirFeedback(confirmacaoSenhaInput, senhaConfirmFeedback, isValid, mensagem);
+        return isValid;
     }
 
+    emailInput.addEventListener('input', function() {
+        const isValid = emailInput.checkValidity(); //validando o email com o item do html
+        let mensagem = '';
+        if (!isValid && emailInput.value.length > 0) {
+            mensagem = 'Por favor, insira um endereço de email válido.';
+        }
 
-    form.addEventListener('submit', (e) => {
-        e.preventDefault(); 
-        
-        const isNameValid = validateName();
-        const isEmailValid = validateEmail();
-        const arePasswordsValid = validatePasswordFields();
+        exibirFeedback(emailInput, emailFeedback, isValid, mensagem);
+    });
 
-        if (isNameValid && isEmailValid && arePasswordsValid) {
-            alert('✅ Cadastro realizado com sucesso!');
-            form.reset(); 
+    senhaInput.addEventListener('input', function() {
+        validarForcaSenha();
+        validarConfirmacaoSenha();
+    }); //fica rodando os dois da senha ao mesmo tempo pra confirmar que ambos estão iguais
+
+    confirmacaoSenhaInput.addEventListener('input', validarConfirmacaoSenha);
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        //valida de novo pra ver se tá tudo certo
+        const isNomeValid = nomeInput.checkValidity() && nomeInput.value.length >= 3;
+        const isEmailValid = emailInput.checkValidity();
+        const isSenhaForcaValid = validarForcaSenha();
+        const isConfirmacaoValid = validarConfirmacaoSenha();
+
+        // confirmando se tá tudo escrito
+        if (nomeInput.value === '') {
+            exibirFeedback(nomeInput, nomeFeedback, false, 'O nome completo é obrigatório.');
+        }
+
+        if (emailInput.value === '') {
+            exibirFeedback(emailInput, emailFeedback, false, 'O email é obrigatório.');
+        }
+
+        if (senhaInput.value === '') {
+             exibirFeedback(senhaInput, senhaFeedback, false, 'A senha é obrigatória.');
+        }
+
+        if (confirmacaoSenhaInput.value === '') {
+            exibirFeedback(confirmacaoSenhaInput, senhaConfirmFeedback, false, 'A confirmação de senha é obrigatória.');
+        }
+
+        // Se todas as validações customizadas passarem...
+        if (isNomeValid && isEmailValid && isSenhaForcaValid && isConfirmacaoValid) {
+            // Se tudo estiver certo pode enviar o formulário
+            // form.submit();
+            console.log('Formulário Válido! Pronto para enviar.');
+            alert('Cadastro realizado com sucesso! (Simulação)');
         } else {
-            alert('⚠️ Por favor, corrija os erros no formulário.');
+            // Se houver erros, exibe uma mensagem geral e foca no primeiro campo inválido.
+            console.log('Formulário Inválido! Corrija os erros.');
         }
     });
+
 });
